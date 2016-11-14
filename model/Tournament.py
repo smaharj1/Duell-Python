@@ -33,4 +33,4 @@ class Tournament:
         if userinput == 'y':
             self.totalgames = self.totalgames + 1
 
-        #gamecomplete = newgame.start()
+        gamecomplete = newgame.start()

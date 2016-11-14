@@ -16,6 +16,13 @@ class Game:
         self.is_done = False
         self.computer_win = True
 
+    def start(self):
+        self.board_view.print_board()
+
+
+
+
+
     def determine_turn(self):
         human_die = 0
         computer_die = 0
@@ -35,10 +42,10 @@ class Game:
 
             if human_die == computer_die:
                 print("It is a draw. Do it again!")
-        
+
         if computer_die > human_die:
             print("Computer goes first!")
             return True
-        else :
+        else:
             print("You go first!")
             return False
