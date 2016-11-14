@@ -1,4 +1,7 @@
 """This class models the tournament"""
+from model.Game import Game
+
+
 class Tournament:
     """This class models the tournament"""
 
@@ -21,11 +24,13 @@ class Tournament:
         gamecomplete = True
 
         while userinput != 'y' and userinput != 'o':
-            userinput = input("Do you want to start a new game (Y) or open existing (O)? :: ")
+            userinput = input(
+                "Do you want to start a new game (Y) or open existing (O)? :: ")
             userinput = userinput.lower()
 
-        if userinput == 'y':
-            self.totalgames = self.totalgames+1
-            newgame = Game()
+        newgame = Game()
 
-        gamecomplete = newgame.start()
+        if userinput == 'y':
+            self.totalgames = self.totalgames + 1
+
+        #gamecomplete = newgame.start()

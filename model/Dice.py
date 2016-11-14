@@ -1,6 +1,4 @@
 """This class holds the information of a single die"""
-
-
 class Dice:
     """This class holds the information of a single die"""
 
@@ -9,10 +7,7 @@ class Dice:
         self.right = ord(dice_name[2]) - ord('0')
 
         if self.top == self.right:
-            self.top = 1
-            self.right = 1
-            self.front = 1
-            self.isking = True
+            self.set_king()
         else:
             self.front = self.computefrontface(self.top, self.right)
             self.isking = False
@@ -68,6 +63,9 @@ class Dice:
 
     def set_killed(self):
         self.iskilled = True
+
+    def get_top(self):
+        return self.top
 
     @staticmethod
     def computefrontface(top, right):
