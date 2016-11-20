@@ -5,6 +5,7 @@ import math
 
 
 class Board:
+
     def __init__(self, keys):
         self.TOTAL_ROWS = 8
         self.TOTAL_COLUMNS = 9
@@ -32,8 +33,109 @@ class Board:
                     # Initialize the board as the input given
                     self.board[i][j] = Dice(str_board[i][j])
 
+    def move(self, old_position, new_position, direction):
+        """Moves the dice to the desired location and returns the new dice if eaten"""
+        old_row = old_position.row
+        old_col = old_position.col
+        new_row = new_position.row
+        new_col = new_position.col
 
-    def isLegal(self, old_position, new_position, is_player_computer):
+        is_computer = self.board[old_row][old_col].iscomputer
+
+        frontal = new_row - old_row
+        side = new_col - old_col
+
+        if not is_computer:
+            if direction == 'f':
+                # Checks if the dice is rolled forward or backward and assigns
+                # the rolling accordingly.
+                for i in range(0, abs(frontal)):
+                    if frontal < 0:
+                        self.board[old_row][old_col].move_forward()
+                    else:
+                        self.board[old_row][old_col].move_backward()
+
+                # Checks if the dice is rolled right or left and assigns the
+                # rolling accordingly.
+                for i in range(0, abs(side)):
+                    if side > 0:
+                        self.board[old_row][old_col].move_right()
+
+                    else:
+                        self.board[old_row][old_col].move_left()
+
+            else:
+                # Checks if the dice is rolled right or left and assigns the
+                # rolling accordingly.
+                for i in range(0, abs(side)):
+                    if side > 0:
+                        self.board[old_row][old_col].move_right()
+
+                    else:
+                        self.board[old_row][old_col].move_left()
+
+                # Checks if the dice is rolled forward or backward and assigns
+                # the rolling accordingly.
+                for i in range(0, abs(frontal)):
+                    if frontal < 0:
+                        self.board[old_row][old_col].move_forward()
+
+                    else:
+                        self.board[old_row][old_col].move_backward()
+
+        else:
+            if direction == 'f':
+                # Checks if the dice is rolled forward or backward and assigns
+                # the rolling accordingly.
+                for i in range(0, abs(frontal)):
+                    if frontal > 0:
+                        self.board[old_row][old_col].move_forward()
+
+                    else:
+                        self.board[old_row][old_col].move_backward()
+
+                # Checks if the dice is rolled right or left and assigns the
+                # rolling accordingly.
+                for i in range(0, abs(side)):
+                    if side < 0:
+                        self.board[old_row][old_col].move_right()
+
+                    else:
+                        self.board[old_row][old_col].move_left()
+
+            else:
+                # Checks if the dice is rolled right or left and assigns the
+                # rolling accordingly.
+                for i in range(0, abs(side)):
+                    if side < 0:
+                        self.board[old_row][old_col].move_right()
+
+                    else:
+                        self.board[old_row][old_col].move_left()
+
+                # Checks if the dice is rolled forward or backward and assigns
+                # the rolling accordingly.
+                for i in range(0, abs(frontal)):
+                    if frontal > 0:
+                        self.board[old_row][old_col].move_forward()
+
+                    else:
+                        self.board[old_row][old_col].move_backward()
+
+        dice_ate = None
+        # Adds the dice to the Cell and removes the dice from previous
+        # location.
+        if self.board[new_row][new_col] != None:
+            # cout << "Dice is eaten!" << endl << endl
+            dice_ate = self.board[new_row][new_col]
+            self.board[new_row][new_col] = None
+
+        self.board[new_row][new_col] = self.board[old_row][old_col]
+        self.board[old_row][old_col] = None
+
+        return dice_ate
+
+    def is_legal(self, old_position, new_position, is_player_computer):
         """Checks if the move is legal"""
         old_row = old_position.row
         old_col = old_position.col
@@ -62,6 +164,8 @@ class Board:
                 if not self.god_mode:
                     print("Hey, you are trying to replace your own player")
                 return False
+
+        return True
 
     def is_path_good(self, old_position, new_position, correctpaths):
         """Checks if the path is good"""

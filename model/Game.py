@@ -2,7 +2,7 @@
 from random import randint
 from model.Board import Board
 from view.BoardView import BoardView as BView
-
+from model.Human import Human
 
 class Game:
 
@@ -21,6 +21,8 @@ class Game:
         
         self.is_done = False
         self.computer_win = True
+        self.human = Human(self.board)
+        self.computer = Human(self.board)
 
     def start(self):
         """Starts the game and returns if the game has ended."""
@@ -32,7 +34,7 @@ class Game:
             #if keep_playing == 's':
             #    return False
             
-            
+            self.human.play()
 
     def ask_to_save(self):
         choice = ""
