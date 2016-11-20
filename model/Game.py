@@ -6,24 +6,44 @@ from view.BoardView import BoardView as BView
 
 class Game:
 
-    def __init__(self):
+    def __init__(self, is_new_game, opened_board = None, is_computer_turn = None):
         master_list = [5, 1, 2, 6, 1, 6, 2, 1, 5]
+        print("Going in here")
+        if is_new_game:
+            self.computer_turn = self.determine_turn()
+            self.board = Board(master_list)
+        else:
+            self.computer_turn = is_computer_turn
+            self.board = opened_board
 
-        self.board = Board(master_list)
 
         self.board_view = BView(self.board)
-        self.computer_turn = self.determine_turn()
+        
         self.is_done = False
         self.computer_win = True
 
     def start(self):
-        self.board_view.print_board()
+        """Starts the game and returns if the game has ended."""
+        while not self.is_done:
+            self.board_view.print_board()
 
+            #keep_playing = self.ask_to_save()
 
+            #if keep_playing == 's':
+            #    return False
+            
+            
 
+    def ask_to_save(self):
+        choice = ""
 
+        while choice != 'p' and choice != 's':
+            choice = input(
+                "Do you want to keep playing the game or save the game? (S for save/P for keep playing)")
+            choice = choice.lower()
 
     def determine_turn(self):
+        """Determines who goes first"""
         human_die = 0
         computer_die = 0
 

@@ -21,6 +21,18 @@ class Board:
                 else:
                     self.board[i][j] = None
 
+    def set_board(self, str_board):
+        """Sets the board from the string representation of the board"""
+        for i in range(0, self.TOTAL_ROWS):
+            for j in range(0, self.TOTAL_COLUMNS):
+                if str_board[i][j] == '0':
+                    # Initialize the board as None
+                    self.board[i][j] = None
+                else:
+                    # Initialize the board as the input given
+                    self.board[i][j] = Dice(str_board[i][j])
+
+
     def isLegal(self, old_position, new_position, is_player_computer):
         """Checks if the move is legal"""
         old_row = old_position.row
