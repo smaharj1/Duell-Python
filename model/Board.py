@@ -33,6 +33,10 @@ class Board:
                     # Initialize the board as the input given
                     self.board[i][j] = Dice(str_board[i][j])
 
+    def get_dice_at(self, coord):
+        return self.board[coord.get_row()][coord.get_col()]
+
+
     def move(self, old_position, new_position, direction):
         """Moves the dice to the desired location and returns the new dice if eaten"""
         old_row = old_position.row
