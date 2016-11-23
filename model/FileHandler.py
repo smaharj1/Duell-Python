@@ -1,5 +1,6 @@
 """"""
 import os
+from model.Coordinates import Coordinates
 
 
 class FileHandler:
@@ -9,6 +10,38 @@ class FileHandler:
         self.computer_score = 0
         self.human_score = 0
         self.computer_turn = True
+
+    def save_game(self, filename, board, is_computer_turn, computer_score, human_score):
+        """Saves the current game"""
+        save_file = open(filename, "w")
+
+        save_file.write("Board: \n")
+
+        for i in range(0, board.TOTAL_ROWS):
+            output = ""
+            for j in range(0, board.TOTAL_COLUMNS):
+                coord = Coordinates(i, j)
+                if board.get_dice_at(coord) is not None:
+                    output += " " +board.get_dice_at(coord).get_value() +" "
+                else:
+                    output += "  0  "
+
+            save_file.write(output)
+            save_file.write("\n")
+
+        save_file.write("\n")
+        temp = "Computer Wins: " + str(computer_score)
+        save_file.write(temp)
+        save_file.write("\n")
+        temp = "Human Wins: " + str(human_score)
+        save_file.write(temp)
+
+        if is_computer_turn:
+            save_file.write("\nNext Player: Computer")
+        else:
+            save_file.write("\nNext Player: Human")
+
+        save_file.close()
 
     def open_game(self, filename, board):
         index = 0

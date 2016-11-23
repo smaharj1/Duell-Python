@@ -20,6 +20,9 @@ class Dice:
 
         self.iskilled = False
 
+    def is_computer(self):
+        return self.iscomputer
+        
     def get_value(self):
         """Gets the string representation of the die"""
         if self.iscomputer:
@@ -66,6 +69,9 @@ class Dice:
 
     def get_top(self):
         return self.top
+    
+    def is_player_king(self):
+        return self.isking
 
     @staticmethod
     def computefrontface(top, right):

@@ -6,7 +6,7 @@ from model.Coordinates import Coordinates
 class Human(Player):
 
     def __init__(self, board):
-        super().__init__(board)
+        super().__init__(board, False)
 
     def play(self):
 
@@ -35,7 +35,7 @@ class Human(Player):
             else:
                 direction = 'l'
 
-        self._print_move(coord_1,coord_2, direction, False)
+        self._print_move(coord_1, direction, False,"")
         dice_ate = self._board.move(coord_1, coord_2, direction)
 
         return dice_ate

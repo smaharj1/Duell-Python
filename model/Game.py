@@ -3,10 +3,12 @@ from random import randint
 from model.Board import Board
 from view.BoardView import BoardView as BView
 from model.Human import Human
+from model.Computer import Computer
+
 
 class Game:
 
-    def __init__(self, is_new_game, opened_board = None, is_computer_turn = None):
+    def __init__(self, is_new_game, opened_board=None, is_computer_turn=None):
         master_list = [5, 1, 2, 6, 1, 6, 2, 1, 5]
         print("Going in here")
         if is_new_game:
@@ -16,13 +18,18 @@ class Game:
             self.computer_turn = is_computer_turn
             self.board = opened_board
 
-
         self.board_view = BView(self.board)
-        
+
         self.is_done = False
         self.computer_win = True
         self.human = Human(self.board)
-        self.computer = Human(self.board)
+        self.computer = Computer(self.board)
+
+    def get_board(self):
+        return self.board
+
+    def is_computer_turn(self):
+        return self.computer_turn
 
     def start(self):
         """Starts the game and returns if the game has ended."""
@@ -31,10 +38,35 @@ class Game:
 
             #keep_playing = self.ask_to_save()
 
-            #if keep_playing == 's':
+            # if keep_playing == 's':
             #    return False
-            
-            self.human.play()
+
+            if self.computer_turn:
+                dice_returned = self.computer.play()
+                if dice_returned is not None:
+                    if dice_returned.is_player_king():
+                        self.is_done = True
+                        self.computer_win = True
+                        self.print_winner(self.computer_win)
+                self.computer_turn = not self.computer_turn
+            else:
+                dice_returned = self.human.play()
+
+                if dice_returned is not None:
+                    if dice_returned.isking:
+                        self.is_done = True
+                        self.computer_win = False
+                        self.print_winner(self.computer_win)
+                self.computer_turn = not self.computer_turn
+        
+        return True
+
+    def print_winner(self, computer_winner):
+        if computer_winner:
+            print()
+            print("####-----------------####--------------------####")
+            print("Computer WON!!!!!!")
+            print("Sorry! Better luck next time!")
 
     def ask_to_save(self):
         choice = ""
@@ -43,6 +75,8 @@ class Game:
             choice = input(
                 "Do you want to keep playing the game or save the game? (S for save/P for keep playing)")
             choice = choice.lower()
+
+        return choice
 
     def determine_turn(self):
         """Determines who goes first"""

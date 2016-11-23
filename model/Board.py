@@ -37,6 +37,7 @@ class Board:
         return self.board[coord.get_row()][coord.get_col()]
 
 
+
     def move(self, old_position, new_position, direction):
         """Moves the dice to the desired location and returns the new dice if eaten"""
         old_row = old_position.row
@@ -171,6 +172,11 @@ class Board:
 
         return True
 
+    def algo_path_good(self, old_position, new_position, correct_paths):
+        self.god_mode = True
+
+        return self.is_path_good(old_position, new_position, correct_paths)
+    
     def is_path_good(self, old_position, new_position, correctpaths):
         """Checks if the path is good"""
         old_row = old_position.row
@@ -187,9 +193,12 @@ class Board:
         # At this point, it is obvious that the frontal and side are going to
         # be good.
         if self.board[old_row][old_col].get_top() != abs(frontal) + abs(side):
+            
+            if not self.god_mode:
+                print(
+                    "The desired location cannot be reached by the number of moves available")
+            
             self.god_mode = False
-            print(
-                "The desired location cannot be reached by the number of moves available")
             return False
 
         index = 0
@@ -273,7 +282,8 @@ class Board:
 
         # Checks if both direction paths are incorrect.
         if not correctpaths[0] and not correctpaths[1]:
-            print("There are hindrances on the path")
+            if not self.god_mode:
+                print("There are hindrances on the path")
             self.god_mode = False
 
         self.god_mode = False

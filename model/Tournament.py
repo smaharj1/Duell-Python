@@ -12,7 +12,7 @@ class Tournament:
         self.totalgames = 0
         self.humanscore = 0
         self.computerscore = 0
-        self.fileHandler = FileHandler()
+        self.file_handler = FileHandler()
 
     @staticmethod
     def printwelcomemessage():
@@ -46,12 +46,12 @@ class Tournament:
                     "Please enter the name of the file you want to open: ")
 
             # Opens the file and inputs
-            self.fileHandler.open_game(filename, new_board)
+            self.file_handler.open_game(filename, new_board)
 
             # Setting the results to the class variables
-            self.computerscore = self.fileHandler.get_computer_score()
-            self.humanscore = self.fileHandler.get_human_score()
-            computer_turn = self.fileHandler.get_is_computer()
+            self.computerscore = self.file_handler.get_computer_score()
+            self.humanscore = self.file_handler.get_human_score()
+            computer_turn = self.file_handler.get_is_computer()
 
             newgame = Game(False, new_board, computer_turn)
 
@@ -64,4 +64,6 @@ class Tournament:
                 self.humanscore = self.humanscore + 1
         else:
             # save the current game.
-            print()
+            filename = input("Please enter the name of the file with any extension you like: ")
+            self.file_handler.save_game(filename, newgame.get_board(), newgame.is_computer_turn(), self.computerscore, self.humanscore)
+            
