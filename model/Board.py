@@ -36,8 +36,6 @@ class Board:
     def get_dice_at(self, coord):
         return self.board[coord.get_row()][coord.get_col()]
 
-
-
     def move(self, old_position, new_position, direction):
         """Moves the dice to the desired location and returns the new dice if eaten"""
         old_row = old_position.row
@@ -176,7 +174,7 @@ class Board:
         self.god_mode = True
 
         return self.is_path_good(old_position, new_position, correct_paths)
-    
+
     def is_path_good(self, old_position, new_position, correctpaths):
         """Checks if the path is good"""
         old_row = old_position.row
@@ -193,11 +191,11 @@ class Board:
         # At this point, it is obvious that the frontal and side are going to
         # be good.
         if self.board[old_row][old_col].get_top() != abs(frontal) + abs(side):
-            
+
             if not self.god_mode:
                 print(
                     "The desired location cannot be reached by the number of moves available")
-            
+
             self.god_mode = False
             return False
 
@@ -308,3 +306,58 @@ class Board:
             dice_name = dice_name + str(top) + str(7 - front)
 
         return Dice(dice_name)
+
+    def get_path_coordinates(self, from_node, to):
+        # Initialization of directions and the answer arraylist.
+        directions = [True, True]
+        path_coordinates = []
+
+        row1 = from_node.get_row()
+        col1 = from_node.get_col()
+        row2 = to.get_row()
+        col2 = to.get_col()
+
+        # Checks if the path is good. If it is, then go through each path and
+        # record the location.
+        if self.algo_path_good(from_node, to, directions):
+
+            if directions[0] == True:
+                # This is when frontal is first
+                if row1 < row2:
+                    for i in range(row1 + 1, row2 + 1):
+                        if col1 == col2 and i == row2:
+                            continue
+                        path_coordinates.append(Coordinates(i, col1))
+                elif row1 > row2:
+                    for i in range(row1 - 1, row2 - 1, -1):
+                        if col1 == col2 and i == row1:
+                            continue
+                        path_coordinates.append(Coordinates(i, col1))
+
+                if col1 < col2:
+                    for i in range(col1 + 1, col2):
+                        path_coordinates.append(Coordinates(row2, i))
+                elif col1 > col2:
+                    for i in range(col1 - 1, col2, -1):
+                        path_coordinates.append(Coordinates(row2, i))
+            elif directions[1] == True:
+                # This is when lateral is first
+                if col1 < col2:
+                    for i in range(col1 + 1, col2 + 1):
+                        if row1 == row2 and i == col1:
+                            continue
+                        path_coordinates.append(Coordinates(row1, i))
+                elif col1 > col2:
+                    for i in range(col1 - 1, col2 - 1, -1):
+                        if row1 == row2 and i == col2:
+                            continue
+                        path_coordinates.append(Coordinates(row1, i))
+                if row1 < row2:
+                    for i in range(row1 + 1, row2):
+                        path_coordinates.append(Coordinates(i, col2))
+                elif row1 > row2:
+                    for i in range(row1 - 1, row2, -1):
+                        path_coordinates.append(Coordinates(i, col2))
+
+        # Returns the path coordinates.
+        return path_coordinates

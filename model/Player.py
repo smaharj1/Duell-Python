@@ -35,6 +35,28 @@ class Player:
         self._prev_coordinates = None
         self._new_coordinates = None
 
+    def _can_block(self, threat_node):
+        self.__nullify_suggestion()
+
+        path_coordinates = []
+        current_king = self.__get_current_player_king()
+
+        path_coordinates = self._board.get_path_coordinates(threat_node.get_coordinates(), current_king.get_coordinates())
+
+        for i in range(0, len(self._current_player)):
+            current = self._current_player[i]
+            if current.get_dice().is_player_king():
+                continue
+            #print(str(len(path_coordinates)), " is the length of paths available")
+            for j in range(0, len(path_coordinates)):
+                temp_dir = [True, True]
+                print("Current node is ", current.get_dice().get_value())
+                if self._board.algo_path_good(current.get_coordinates(), path_coordinates[j], temp_dir):
+                    self._prev_coordinates = current.get_coordinates()
+                    self._new_coordinates = path_coordinates[j]
+                    return True
+        return False
+    
     def _king_in_threat(self):
         player_king = self.__get_current_player_king()
 
