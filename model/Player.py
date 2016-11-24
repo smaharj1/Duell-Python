@@ -35,13 +35,63 @@ class Player:
         self._prev_coordinates = None
         self._new_coordinates = None
 
+    def _safe_offense(self):
+        self.__nullify_suggestion()
+
+        if self._is_player_computer:
+            for row in range(self._board.TOTAL_ROWS - 1, -1, -1):
+                for col in range(self._board.TOTAL_COLUMNS - 1, -1, -1):
+                    if self.__can_reach_location(self._opponent_player, row, col) is None:
+                        temp = self.__can_reach_location(
+                            self._current_player, row, col)
+
+                        if temp is not None:
+                            self._prev_coordinates = temp.get_coordinates()
+                            self._new_coordinates = Coordinates(row, col)
+                            return True
+        else:
+            for row in range(self._board.TOTAL_ROWS):
+                for col in range(self._board.TOTAL_COLUMNS):
+                    if self.__can_reach_location(self._opponent_player, row, col) is None:
+                        temp = self.__can_reach_location(
+                            self._current_player, row, col)
+
+                        if temp is not None:
+                            self._prev_coordinates = temp.get_coordinates()
+                            self._new_coordinates = Coordinates(row, col)
+                            return True
+        return False
+
+    def __can_reach_location(self, player_dice, row, col):
+        self.__nullify_suggestion()
+
+        for index in range(len(player_dice)):
+            temp = player_dice[index]
+            coord = Coordinates(row, col)
+            temp_dir = [True, True]
+            if self._board.algo_path_good(temp.get_coordinates(), coord, temp_dir):
+                if self._board.algo_is_legal(temp.get_coordinates(), coord, temp.get_dice().is_computer()):
+                    return temp
+        return None
+
+    def _can_eat_opponent(self):
+        self.__nullify_suggestion()
+
+        for oppIndex in range(len(self._opponent_player)):
+            temp = self._opponent_player[oppIndex]
+
+            if self.__can_eat(self._current_player, temp):
+                return True
+        return False
+
     def _can_block(self, threat_node):
         self.__nullify_suggestion()
 
         path_coordinates = []
         current_king = self.__get_current_player_king()
 
-        path_coordinates = self._board.get_path_coordinates(threat_node.get_coordinates(), current_king.get_coordinates())
+        path_coordinates = self._board.get_path_coordinates(
+            threat_node.get_coordinates(), current_king.get_coordinates())
 
         for i in range(0, len(self._current_player)):
             current = self._current_player[i]
@@ -56,7 +106,7 @@ class Player:
                     self._new_coordinates = path_coordinates[j]
                     return True
         return False
-    
+
     def _king_in_threat(self):
         player_king = self.__get_current_player_king()
 
@@ -76,24 +126,31 @@ class Player:
     def _can_eat_threat(self, threat_node):
         if threat_node is None:
             return False
-        
+
         self.__nullify_suggestion()
 
         if self.__can_eat(self._current_player, threat_node):
             return True
-        
+
         return False
-    
+
     def __can_eat(self, player_dices, threat_node):
-        for index in range (0, len(player_dices)):
+        for index in range(0, len(player_dices)):
             temp = player_dices[index]
             temp_dir = [True, True]
 
             if self._board.algo_path_good(temp.get_coordinates(), threat_node.get_coordinates(), temp_dir):
                 self._prev_coordinates = temp.get_coordinates()
                 self._new_coordinates = threat_node.get_coordinates()
+                self.__set_direction(temp_dir)
                 return True
         return False
+
+    def __set_direction(self, directions):
+        if directions[0]:
+            self._direction = 'f'
+        else:
+            self._direction = 'l'
 
     def _can_win(self):
         opponent_king = self.__get_opponent_king()

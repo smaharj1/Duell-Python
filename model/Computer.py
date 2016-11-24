@@ -14,6 +14,8 @@ class Computer(Player):
 
         dice_ate = None
 
+        # Checks if the computer can win the game. If it can, then win the
+        # game.
         if self._can_win():
             reason = "because it led to winning condition"
             self._print_move(self._prev_coordinates,
@@ -23,8 +25,9 @@ class Computer(Player):
             return dice_ate
 
         threat_node = self._king_in_threat()
+        # Checks if there are any threats to the king. If there is, then try to eat the
+        # threat. Or block its move.
         if threat_node is not None:
-            print("Threat is ",threat_node.get_dice().get_value())
             if self._can_eat_threat(threat_node):
                 reason = "because it led eating the threat to the king"
                 self._print_move(self._prev_coordinates,
@@ -40,6 +43,22 @@ class Computer(Player):
                                             self._new_coordinates, self._direction)
                 return dice_ate
 
+        # Tries to eat opponent's dice if it is possible
+        if self._can_eat_opponent():
+            reason = "because it ate your dice."
+            self._print_move(self._prev_coordinates,
+                             self._direction, True, reason)
+            dice_ate = self._board.move(
+                self._prev_coordinates, self._new_coordinates, self._direction)
+            return dice_ate
+
+        self._safe_offense()
+
+        reason = "because there are no dice that the computer could eat"
+        self._print_move(self._prev_coordinates, self._direction, True, reason)
+        dice_ate = self._board.move(self._prev_coordinates, self._new_coordinates, self._direction)
+
+        return dice_ate
 
     def refresh_players(self):
         self._opponent_player = []

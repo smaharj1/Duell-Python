@@ -48,8 +48,15 @@ class Human(Player):
             message = "Please give " + given + " coordinates from 1 1 to 8 9 :: "
             user_input = input(message)
             coords = user_input.split()
-            inputs = [int(x.strip()) for x in coords]
 
+            inputs = [x.strip() for x in coords]
+
+            if inputs[0] < '0' or inputs[0] > '9' or inputs[1] <'0' or inputs[1] >'9':
+                print("Error: Please give correct coordinates")
+                continue                
+
+            inputs[0] = int(inputs[0])
+            inputs[1] = int(inputs[1])
             if inputs[0] > 0 and inputs[0] < 9 and inputs[1] > 0 and inputs[1] < 10:
                 valid = True
 

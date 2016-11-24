@@ -138,6 +138,10 @@ class Board:
 
         return dice_ate
 
+    def algo_is_legal(self, old_position, new_position, is_player_computer):
+        self.god_mode = True
+        return self.is_legal(old_position, new_position, is_player_computer)
+
     def is_legal(self, old_position, new_position, is_player_computer):
         """Checks if the move is legal"""
         old_row = old_position.row
