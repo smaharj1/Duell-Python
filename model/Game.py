@@ -33,13 +33,17 @@ class Game:
 
     def start(self):
         """Starts the game and returns if the game has ended."""
+        self.board_view.print_board()
+        
         while not self.is_done:
-            self.board_view.print_board()
+            if self.computer_turn:
+                print("It it computer's turn!\n")
+            else:
+                print("It is your turn! \n")
+            keep_playing = self.ask_to_save()
 
-            #keep_playing = self.ask_to_save()
-
-            # if keep_playing == 's':
-            #    return False
+            if keep_playing == 's':
+                return False
 
             if self.computer_turn:
                 dice_returned = self.computer.play()
@@ -58,15 +62,20 @@ class Game:
                         self.computer_win = False
                         self.print_winner(self.computer_win)
                 self.computer_turn = not self.computer_turn
+            
+        self.board_view.print_board()
         
         return True
 
     def print_winner(self, computer_winner):
+        print()
+        print("####-----------------####--------------------####")
         if computer_winner:
-            print()
-            print("####-----------------####--------------------####")
             print("Computer WON!!!!!!")
             print("Sorry! Better luck next time!")
+        else:
+            print("You WON!!!!!!")
+            print("Congratulations!")
 
     def ask_to_save(self):
         choice = ""
@@ -87,7 +96,7 @@ class Game:
             user_input = 'p'
 
             while user_input != 'r':
-                user_input = input("Please enter R to toss a die")
+                user_input = input("Please enter R to toss a die:: ")
                 user_input = user_input.lower()
 
             human_die = randint(1, 6)
