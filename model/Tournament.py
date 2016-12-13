@@ -69,6 +69,18 @@ class Tournament:
                         "Do you want to start another round?(Y/N) :: ")
                     userinput = userinput.lower()
 
+                print("\nThank you for playing Duell. \nThe total score is:")
+                print("Human: ", str(self.humanscore))
+                print("Computer: ", str(self.computerscore))
+                print("\n-------------------------------------------------")
+                
+                if self.humanscore > self.computerscore:
+                    print("You won the tournament!")
+                elif self.humanscore < self.computerscore:
+                    print("The computer won the tournament!")
+                else:
+                    print("The tournament is a draw")
+                print("-----------------------------------------------------")
             else:
                 userinput = "n"
                 # save the current game.
@@ -77,6 +89,6 @@ class Tournament:
                 self.file_handler.save_game(filename, newgame.get_board(
                 ), newgame.is_computer_turn(), self.computerscore, self.humanscore)
 
-        print("\nThank you for playing Duell. \nThe total score is:")
-        print("Human: ", str(self.humanscore))
-        print("Computer: ", str(self.computerscore))
+                print("Game successfully saved! Come back soon!")
+
+        

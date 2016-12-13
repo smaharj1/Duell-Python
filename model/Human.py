@@ -15,6 +15,7 @@ class Human(Player):
 
         self.help_portal()
 
+        self._god_mode = False
         valid = False
 
         while not valid:
@@ -32,6 +33,7 @@ class Human(Player):
             while direction != 'f' and direction != 'l':
                 direction = input(
                     "Do you want to move FRONTAL or LATERAL first? (F/L)")
+                direction = direction.lower()
         else:
             if paths[0]:
                 direction = 'f'
@@ -94,6 +96,7 @@ class Human(Player):
         if userInput == 'y':
             # Perform the help algorithm here.
             self.perform_algorithmic_move()
+            self._god_mode = True
 
     def perform_algorithmic_move(self):
         self.refresh_players()
