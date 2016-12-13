@@ -100,7 +100,7 @@ class Player:
             #print(str(len(path_coordinates)), " is the length of paths available")
             for j in range(0, len(path_coordinates)):
                 temp_dir = [True, True]
-                print("Current node is ", current.get_dice().get_value())
+                #print("Current node is ", current.get_dice().get_value())
                 if self._board.algo_path_good(current.get_coordinates(), path_coordinates[j], temp_dir):
                     self._prev_coordinates = current.get_coordinates()
                     self._new_coordinates = path_coordinates[j]

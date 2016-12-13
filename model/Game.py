@@ -33,9 +33,11 @@ class Game:
 
     def start(self):
         """Starts the game and returns if the game has ended."""
-        self.board_view.print_board()
+        
         
         while not self.is_done:
+            self.board_view.print_board()
+            
             if self.computer_turn:
                 print("It it computer's turn!\n")
             else:
