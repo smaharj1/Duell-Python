@@ -19,19 +19,19 @@ class Player:
     def _print_move(self, coord1, coord2, direction, is_computer, reason):
         print("")
         if is_computer:
-            current = "The computer"
+            current = "The computer picked"
         else:
             if self._god_mode:
-                current = "You should"
+                current = "You should pick"
             else:
-                current = "You "
+                current = "You picked"
 
         if direction == 'f':
             dir1 = "frontally"
         else:
             dir1 = "laterally"
 
-        print(current, " picked ", self._board.get_dice_at(
+        print(current, " ", self._board.get_dice_at(
             coord1).get_value(), " to roll from ", coord1.get_string(), " to " +coord2.get_string() +" " + reason)
         print("Roll is ", dir1, " first ")
 

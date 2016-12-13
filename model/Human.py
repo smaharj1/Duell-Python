@@ -95,8 +95,9 @@ class Human(Player):
 
         if userInput == 'y':
             # Perform the help algorithm here.
-            self.perform_algorithmic_move()
             self._god_mode = True
+            
+            self.perform_algorithmic_move()
 
     def perform_algorithmic_move(self):
         self.refresh_players()

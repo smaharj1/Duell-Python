@@ -45,6 +45,9 @@ class Tournament:
                     filename = input(
                         "Please enter the name of the file you want to open: ")
 
+                    if not os.path.exists("./"+ filename):
+                        print("The requested file is not found. Please enter again.")
+
                 # Opens the file and inputs
                 self.file_handler.open_game(filename, new_board)
 
