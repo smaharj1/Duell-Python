@@ -18,7 +18,7 @@ class Computer(Player):
         # game.
         if self._can_win():
             reason = "because it led to winning condition"
-            self._print_move(self._prev_coordinates,
+            self._print_move(self._prev_coordinates, self._new_coordinates,
                              self._direction, True, reason)
             dice_ate = self._board.move(self._prev_coordinates,
                                         self._new_coordinates, self._direction)
@@ -30,14 +30,14 @@ class Computer(Player):
         if threat_node is not None:
             if self._can_eat_threat(threat_node):
                 reason = "because it led eating the threat to the king"
-                self._print_move(self._prev_coordinates,
+                self._print_move(self._prev_coordinates, self._new_coordinates,
                                  self._direction, True, reason)
                 dice_ate = self._board.move(self._prev_coordinates,
                                             self._new_coordinates, self._direction)
                 return dice_ate
             elif self._can_block(threat_node):
                 reason = "because it blocked from eating my King"
-                self._print_move(self._prev_coordinates,
+                self._print_move(self._prev_coordinates, self._new_coordinates,
                                  self._direction, True, reason)
                 dice_ate = self._board.move(self._prev_coordinates,
                                             self._new_coordinates, self._direction)
@@ -46,7 +46,7 @@ class Computer(Player):
         # Tries to eat opponent's dice if it is possible
         if self._can_eat_opponent():
             reason = "because it ate your dice."
-            self._print_move(self._prev_coordinates,
+            self._print_move(self._prev_coordinates, self._new_coordinates,
                              self._direction, True, reason)
             dice_ate = self._board.move(
                 self._prev_coordinates, self._new_coordinates, self._direction)
@@ -55,7 +55,7 @@ class Computer(Player):
         self._safe_offense()
 
         reason = "because there are no dice that the computer could eat"
-        self._print_move(self._prev_coordinates, self._direction, True, reason)
+        self._print_move(self._prev_coordinates, self._new_coordinates, self._direction, True, reason)
         dice_ate = self._board.move(self._prev_coordinates, self._new_coordinates, self._direction)
 
         return dice_ate

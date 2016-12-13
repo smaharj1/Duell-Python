@@ -15,12 +15,12 @@ class Player:
         self._is_player_computer = is_computer
         self._both_direction_possible = True
 
-    def _print_move(self, coord1, direction, is_computer, reason):
+    def _print_move(self, coord1, coord2, direction, is_computer, reason):
         print("")
         if is_computer:
             current = "The computer"
         else:
-            current = "You"
+            current = "You should"
 
         if direction == 'f':
             dir1 = "frontally"
@@ -28,8 +28,8 @@ class Player:
             dir1 = "laterally"
 
         print(current, " picked ", self._board.get_dice_at(
-            coord1).get_value(), " at ", coord1.get_string(), " to roll " + reason)
-        print("It rolled ", dir1, " first ")
+            coord1).get_value(), " to roll from ", coord1.get_string(), " to " +coord2.get_string() + " because " + reason)
+        print("Roll is ", dir1, " first ")
 
     def __nullify_suggestion(self):
         self._prev_coordinates = None
