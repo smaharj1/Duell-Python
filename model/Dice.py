@@ -1,8 +1,27 @@
-"""This class holds the information of a single die"""
+"""
+Name:  Sujil Maharjan                                    
+Project : Project 1, Duell game                          
+Class : Organization of Programming Language(CMPS 366-01)
+Date : 10-5-2016                                         
+"""
 
 
 class Dice:
-    """This class holds the information of a single die"""
+    """
+    Function Name: Dice
+    Purpose: Default Constructor
+
+    Parameters: 
+        dice_name, a string. It holds the dice in string representation
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
 
     def __init__(self, dice_name):
         self.top = ord(dice_name[1]) - ord('0')
@@ -22,8 +41,38 @@ class Dice:
 
         self.iskilled = False
 
+    """
+    Function Name: is_computer
+    Purpose: Returns if the current dice is a computer die or not. 
+
+    Parameters: None.
+        
+    Return Value: True if the die is computer die, else false.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
+
     def is_computer(self):
         return self.iscomputer
+
+    """
+    Function Name: get_value
+    Purpose: It returns the string representation of the die. 
+
+    Parameters: None.
+        
+    Return Value: returns the string representation of the die.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
 
     def get_value(self):
         """Gets the string representation of the die"""
@@ -32,12 +81,42 @@ class Dice:
         else:
             return "H" + str(self.top) + str(self.right)
 
+    """
+    Function Name: move_left
+    Purpose: It rolls the die left and updates the values. 
+
+    Parameters: None. 
+        
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
+
     def move_left(self):
         """Rolls the die to the left"""
         if not self.isking:
             tmp = self.top
             self.top = self.right
             self.right = 7 - tmp
+
+    """
+    Function Name: move_right
+    Purpose: It rolls the die right and updates the values. 
+
+    Parameters: None. 
+        
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
 
     def move_right(self):
         """ROlls the die to the right"""
@@ -46,12 +125,42 @@ class Dice:
             self.top = 7 - self.right
             self.right = tmp
 
+    """
+    Function Name: move_backward
+    Purpose: It rolls the die backward and updates the values. 
+
+    Parameters: None. 
+        
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
+
     def move_backward(self):
         """Rolls the die backwards"""
         if not self.isking:
             tmp = self.top
             self.top = 7 - self.front
             self.front = tmp
+
+    """
+    Function Name: move_forward
+    Purpose: It rolls the die forward and updates the values. 
+
+    Parameters: None. 
+        
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
 
     def move_forward(self):
         """Rolls the die forward"""
@@ -60,21 +169,98 @@ class Dice:
             self.top = self.front
             self.front = 7 - tmp
 
+    """
+    Function Name: set_king
+    Purpose: It sets the die as the king 
+
+    Parameters: None. 
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def set_king(self):
         self.top = 1
         self.right = 1
         self.front = 1
         self.isking = True
 
+    """
+    Function Name: set_killed
+    Purpose: It sets the die as killed.  
+
+    Parameters: None. 
+        
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """  
     def set_killed(self):
         self.iskilled = True
 
+    """
+    Function Name: get_top
+    Purpose: It gets the top value of the die.  
+
+    Parameters: None. 
+        
+    Return Value: Returns the top value of the die.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """  
     def get_top(self):
         return self.top
 
+    """
+    Function Name: is_player_king
+    Purpose: It checks if the player is a king.  
+
+    Parameters: None. 
+        
+    Return Value: Returns true if the die is a king. Else, returns false.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """  
     def is_player_king(self):
         return self.isking
 
+    """
+    Function Name: computefrontface
+    Purpose: It computes the front face from the given top and right values.  
+
+    Parameters: 
+        top, an integer. It holds the top value of the die. 
+        right, an integer. It holds the right value of the die. 
+        
+    Return Value: Returns the front face value.
+
+    Local Variables: 
+        roles, an array. It holds the values of combinations that can happen in a die. 
+        remain, an integer. 
+        front, an integer. It holds the front face value.  
+
+    Algorithm: 
+        1. Get the top and right values.
+        2. Get the remaining value on that basis and comparing with values in array roles. 
+
+    Assistance Received: none
+    """  
     @staticmethod
     def computefrontface(top, right):
         """Computes the front face of the die given the top and the right"""

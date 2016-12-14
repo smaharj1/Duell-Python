@@ -1,16 +1,55 @@
-""""""
+"""
+Name:  Sujil Maharjan
+Project : Project 1, Duell game
+Class : Organization of Programming Language(CMPS 366-01)
+Date : 10-5-2016
+"""
 import os
 from model.Coordinates import Coordinates
 
-
 class FileHandler:
 
+    """
+    Function Name: FileHandler
+    Purpose: Default Constructor
+
+    Parameters: None. 
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def __init__(self):
         """Sets the initial file handler"""
         self.computer_score = 0
         self.human_score = 0
         self.computer_turn = True
 
+    """
+    Function Name: save_game
+    Purpose: Saves the game according to user's choice of file name
+
+    Parameters: 
+        filename, a string. It holds the name of the file. 
+        board, a Board object. It holds the board. 
+        is_computer_turn, a boolean. It holds if it is computer's turn
+        computer_score, an integer. It holds the computer score. 
+        human_score, an integer. It holds the human score. 
+
+    Return Value: none.
+
+    Local Variables: 
+        save_file, a file. It holds the file properties. 
+        output, a string. It holds the string representation of one row of the board 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def save_game(self, filename, board, is_computer_turn, computer_score, human_score):
         """Saves the current game"""
         save_file = open(filename, "w")
@@ -43,6 +82,24 @@ class FileHandler:
 
         save_file.close()
 
+    """
+    Function Name: open_game
+    Purpose: Opens the game given the filename
+
+    Parameters: 
+        filename, a string. It holds the filename. 
+        board, a Board object. It holds the board object. 
+
+    Return Value: none.
+
+    Local Variables: 
+        index, an integer. It holds the line number of the text file read. 
+        board_str, an array. It holds the board as a string
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def open_game(self, filename, board):
         index = 0
 
@@ -82,11 +139,53 @@ class FileHandler:
         board.set_board(board_str)
         return None
 
+    """
+    Function Name: get_computer_score
+    Purpose: Returns the computer score
+
+    Parameters: None. 
+
+    Return Value: Returns the computer score.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def get_computer_score(self):
         return self.computer_score
 
+    """
+    Function Name: get_human_score
+    Purpose: Returns the human score
+
+    Parameters: None. 
+
+    Return Value: Returns the human score.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def get_human_score(self):
         return self.human_score
 
+    """
+    Function Name: get_is_computer
+    Purpose: Returns if it is computer's turn
+
+    Parameters: None. 
+
+    Return Value: Returns if it is computer's turn.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def get_is_computer(self):
         return self.computer_turn

@@ -1,4 +1,9 @@
-"""This class models the tournament"""
+"""
+Name:  Sujil Maharjan                                    
+Project : Project 1, Duell game                          
+Class : Organization of Programming Language(CMPS 366-01)
+Date : 10-5-2016                                         
+"""
 from model.Game import Game
 from model.FileHandler import FileHandler
 from model.Board import Board
@@ -6,14 +11,40 @@ import os
 
 
 class Tournament:
-    """This class models the tournament"""
+    """
+    Function Name: Tournament
+    Purpose: Default Constructor
 
+    Parameters: None
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def __init__(self):
         self.totalgames = 0
         self.humanscore = 0
         self.computerscore = 0
         self.file_handler = FileHandler()
 
+    """
+    Function Name: printwelcomemessage()
+    Purpose: Prints the welcome message
+
+    Parameters: None
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     @staticmethod
     def printwelcomemessage():
         """Prints the welcome message"""
@@ -21,6 +52,25 @@ class Tournament:
         print("We are very delighted that you chose to play this game")
         print("---------------------------x---------------------------\n")
 
+    """
+    Function Name: startgame
+    Purpose: Starts the tournament
+
+    Parameters: none
+
+    Return Value: none.
+
+    Local Variables: 
+        userinput, a character. It holds the user input for opening a game or starting a new one
+        gamecomplete, a boolean. It determines if the game is completed or not 
+        new_board, a Board object. It is a board if a file is opened
+        filename, a string. It holds the name of the file 
+        newgame, a Game object. It starts a game and holds all the information of one instance of the game 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def startgame(self):
         """Starts the game"""
 

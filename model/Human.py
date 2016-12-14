@@ -1,23 +1,60 @@
-""""""
+"""
+Name:  Sujil Maharjan                                    
+Project : Project 1, Duell game                          
+Class : Organization of Programming Language(CMPS 366-01)
+Date : 10-5-2016                                         
+"""
 from model.Player import Player
 from model.TreeNode import TreeNode
 from model.Coordinates import Coordinates
 
 
 class Human(Player):
+    """
+    Function Name: Human
+    Purpose: Default Constructor
 
+    Parameters: None.
+
+    Return Value: none
+
+    Local Variables: none
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def __init__(self, board):
         super().__init__(board, False)
 
+    """
+    Function Name: play
+    Purpose: Plays the game for the human
+
+    Parameters: none
+
+    Return Value: Returns a dice if human move eats a die
+
+    Local Variables: 
+        direction, a character. It holds the direction of the movement. 
+        paths, an array. It holds the paths possible. 
+        dice_ate, a Dice object. It holds a dice that was eaten. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def play(self):
 
         print("\n It is your turn. Please choose the coordinates ")
 
+        #Ask if the user needs help
         self.help_portal()
 
         self._god_mode = False
         valid = False
 
+        # Loop and find the valid coordinates from the user
         while not valid:
             coord_1 = self.get_coordinates("first")
             coord_2 = self.get_coordinates("destination")
@@ -29,6 +66,7 @@ class Human(Player):
 
         direction = 'k'
 
+        # Only ask the user for path choice if the user has that choice. 
         if paths[0] and paths[1]:
             while direction != 'f' and direction != 'l':
                 direction = input(
@@ -45,6 +83,23 @@ class Human(Player):
 
         return dice_ate
 
+    """
+    Function Name: get_coordinates
+    Purpose: Gets the coordinates from the user
+
+    Parameters: 
+        given, a string. It holds values of if it is first or destination.
+
+    Return Value: REturns the coordinates user entered. 
+
+    Local Variables: 
+        inputs, an array. It holds the user's entries
+        user_coord, a Coordinates object. It holds the user coordinates that was found. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def get_coordinates(self, given):
         valid = False
         inputs = []
@@ -69,6 +124,23 @@ class Human(Player):
         user_coord = Coordinates(inputs[0] - 1, inputs[1] - 1)
         return user_coord
 
+    """
+    Function Name: refresh_players
+    Purpose: Refreshes the current states of the board and stores all the current and opponent player's dices
+
+    Parameters: None.
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: 
+        1. Loop through all the cells in the board 
+        2. If the cell has computer's die, store it to current
+        3. If the cell has human's die, store it to opponent
+
+    Assistance Received: none
+    """
     def refresh_players(self):
         self._opponent_player = []
         self._current_player = []
@@ -83,6 +155,20 @@ class Human(Player):
                     else:
                         self._current_player.append(TreeNode(die, i, j))
 
+    """
+    Function Name: help_portal
+    Purpose: Asks the user if they need help
+
+    Parameters: None
+
+    Return Value: none
+
+    Local Variables: userInput, a character. It holds the user input. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def help_portal(self):
         valid = False
 
@@ -99,6 +185,29 @@ class Human(Player):
             
             self.perform_algorithmic_move()
 
+    """
+    Function Name: perform_algorithmic_move
+    Purpose: Performs the algorithm so that it can suggest the user the move. 
+
+    Parameters: None
+
+    Return Value: none
+
+    Local Variables: 
+        dice_ate, a Dice object. It holds the dice that was eaten
+        reason, a string. It holds the reason for making the move
+        threat_node, a TreeNode object. It holds the node tha pose threat to the king 
+
+    Algorithm: 
+        1. Check if you can win 
+        2. Check if your king is in threat, 
+            1. Remove the threat 
+            2. Make a blocking move
+        3. Check if you can eat other player's dice, and eat it
+        4. Make an offensive move
+
+    Assistance Received: none
+    """
     def perform_algorithmic_move(self):
         self.refresh_players()
         dice_ate = None

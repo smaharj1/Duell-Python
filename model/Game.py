@@ -1,4 +1,9 @@
-"""This class holds the a complete single game"""
+"""
+Name:  Sujil Maharjan                                    
+Project : Project 1, Duell game                          
+Class : Organization of Programming Language(CMPS 366-01)
+Date : 10-5-2016                                         
+"""
 from random import randint
 from model.Board import Board
 from view.BoardView import BoardView as BView
@@ -7,7 +12,24 @@ from model.Computer import Computer
 
 
 class Game:
+    """
+    Function Name: Game
+    Purpose: Default Constructor 
 
+    Parameters: 
+        is_new_game, a boolean. It holds if it is a new game
+        opened_board, a Board object. It holds the board if the board was opened
+        is_computer_turn, a boolean. It holds if it is computer's turn
+
+    Return Value: Returns the row.
+
+    Local Variables: 
+        master_list, an array. It holds the master list. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def __init__(self, is_new_game, opened_board=None, is_computer_turn=None):
         master_list = [5, 1, 2, 6, 1, 6, 2, 1, 5]
         print("Going in here")
@@ -25,12 +47,56 @@ class Game:
         self.human = Human(self.board)
         self.computer = Computer(self.board)
 
+    """
+    Function Name: get_board
+    Purpose: Gets the board 
+
+    Parameters: None. 
+
+    Return Value: Returns the board.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def get_board(self):
         return self.board
 
+    """
+    Function Name: is_computer_turn
+    Purpose: Checks if it is computer's turn 
+
+    Parameters: None. 
+
+    Return Value: Returns true if it is computer's turn.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def is_computer_turn(self):
         return self.computer_turn
 
+    """
+    Function Name: start
+    Purpose: Starts the round of a tournament 
+
+    Parameters: None. 
+
+    Return Value: Returns true if the game ended. It returns false if the game was saved.
+
+    Local Variables: None. 
+
+    Algorithm: 
+        1. Play the Human
+        2. Play the computer
+
+    Assistance Received: none
+    """
     def start(self):
         """Starts the game and returns if the game has ended."""
         
@@ -69,6 +135,21 @@ class Game:
         
         return True
 
+    """
+    Function Name: print_wimmer
+    Purpose: Prints the winner of the round 
+
+    Parameters: 
+        computer_winner, a boolean. It holds if the computer is a winner
+
+    Return Value: None.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def print_winner(self, computer_winner):
         print()
         print("####-----------------####--------------------####")
@@ -79,6 +160,21 @@ class Game:
             print("You WON!!!!!!")
             print("Congratulations!")
 
+    """
+    Function Name: ask_to_save
+    Purpose: Prompts the user if they want to save the game.  
+
+    Parameters: None. 
+
+    Return Value: Returns user's choice
+
+    Local Variables: 
+        choice, a character. It holds user's choice
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def ask_to_save(self):
         choice = ""
 
@@ -89,6 +185,22 @@ class Game:
 
         return choice
 
+    """
+    Function Name: determine_turn
+    Purpose: It determines who to play first 
+
+    Parameters: None. 
+
+    Return Value: Returns true if the computer goes first. 
+
+    Local Variables: 
+        human_die, an integer. It holds the score for human.
+        computer_die, an integer. It holds the score for computer  
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def determine_turn(self):
         """Determines who goes first"""
         human_die = 0
