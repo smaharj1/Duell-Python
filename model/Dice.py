@@ -1,4 +1,6 @@
 """This class holds the information of a single die"""
+
+
 class Dice:
     """This class holds the information of a single die"""
 
@@ -22,7 +24,7 @@ class Dice:
 
     def is_computer(self):
         return self.iscomputer
-        
+
     def get_value(self):
         """Gets the string representation of the die"""
         if self.iscomputer:
@@ -44,7 +46,7 @@ class Dice:
             self.top = 7 - self.right
             self.right = tmp
 
-    def move_back(self):
+    def move_backward(self):
         """Rolls the die backwards"""
         if not self.isking:
             tmp = self.top
@@ -69,7 +71,7 @@ class Dice:
 
     def get_top(self):
         return self.top
-    
+
     def is_player_king(self):
         return self.isking
 

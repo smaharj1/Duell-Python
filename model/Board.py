@@ -1,11 +1,32 @@
-"""This class holds the board of duell"""
+"""
+Name:  Sujil Maharjan                                    
+Project : Project 1, Duell game                          
+Class : Organization of Programming Language(CMPS 366-01)
+Date : 10-5-2016                                         
+"""
+import math
 from model.Dice import Dice
 from model.Coordinates import Coordinates
-import math
 
 
 class Board:
+    """
+    Function Name: Board
+    Purpose: Default Constructor
 
+    Parameters: 
+        keys, an array. It holds the array of all the top faces given.
+
+    Return Value: none.
+
+    Local Variables: 
+        d, pointer of Dice. It temporarily creates a new dice.
+
+    Algorithm:
+        1. Randomly initialize the board with very basic dices.
+
+    Assistance Received: none
+    """
     def __init__(self, keys):
         self.TOTAL_ROWS = 8
         self.TOTAL_COLUMNS = 9
@@ -22,6 +43,23 @@ class Board:
                 else:
                     self.board[i][j] = None
 
+    """
+    Function Name: set_board
+    Purpose: To set the board according to the given values by the user.
+        This will change the locations of the dice on the board.
+
+    Parameters:
+        str_board, a string of board values. It holds 2D array of values that should fill the board.
+
+    Return Value: Returns true if it successfully fills the board.
+
+    Local Variables: None.
+
+    Algorithm:
+        1. Loops through each square and fills it with the values gotten from user.
+
+    Assistance Received: none
+    """
     def set_board(self, str_board):
         """Sets the board from the string representation of the board"""
         for i in range(0, self.TOTAL_ROWS):
@@ -33,9 +71,55 @@ class Board:
                     # Initialize the board as the input given
                     self.board[i][j] = Dice(str_board[i][j])
 
+    """
+    Function Name: get_dice_at
+    Purpose: To get the dice at the given coordinates
+
+    Parameters:
+        coord, a Coordinates object. This holds the x and y coordinates
+
+    Return Value: Returns the dice at the give coordinates 
+
+    Local Variables: None
+
+    Algorithm:
+        1. Loops through each square and fills it with the values gotten from user.
+
+    Assistance Received: none
+    """
     def get_dice_at(self, coord):
         return self.board[coord.get_row()][coord.get_col()]
 
+    """
+    Function Name: move
+    Purpose: To move the dice from the given row and column to the desired row and column.
+
+    Parameters:
+        old_position, a coordinate. It holds the old position information
+        new_position, a coordinate. It holds the new position coordinates. 
+        direction, a character. It holds the direction that the user wants to move.
+
+    Return Value: Returns the pointer to the dice that has been eaten if any. Else, returns null.
+
+    Local Variables: 
+        old_row, an integer. It holds the row number of old coordinates. 
+        old_col, an integer. It holds the column number of the old coordinates. 
+        new_row, an integer. It holds the row number of new coordinates. 
+        new_col, an integer. It holds the column number of new coordinates. 
+        is_computer, boolean. It holds if the player is computer or not.
+        frontal, an integer. It holds the total frontal value of movement.
+        side, an integer. It holds the side value of the movement.
+
+    Algorithm:
+        1. Compute the frontal movement. Frontal and backward are calculated as positive/negative.
+        2. Compute the side movement. 
+        3. If computer, move front means move down and if human, vice versa.
+        4. Same as above for lateral movement.
+        5. Roll dices with the computed values.
+        6. Move the dice to different cells.
+
+    Assistance Received: none
+    """
     def move(self, old_position, new_position, direction):
         """Moves the dice to the desired location and returns the new dice if eaten"""
         old_row = old_position.row
@@ -138,10 +222,52 @@ class Board:
 
         return dice_ate
 
+    """
+    Function Name: algo_is_legal
+    Purpose: To check if the path is legal. This is for automated process.
+
+    Parameters:
+        old_position, a coordinate. It holds the old position information
+        new_position, a coordinate. It holds the new position coordinates. 
+        is_player_computer, a boolean. It holds if the player is human or a computer. 
+
+    Return Value: Returns true if the move from one location to another is legal.
+
+    Local Variables: none.
+
+    Algorithm: none.
+
+    Assistance Received: none
+    """
     def algo_is_legal(self, old_position, new_position, is_player_computer):
         self.god_mode = True
         return self.is_legal(old_position, new_position, is_player_computer)
 
+    """
+    Function Name: is_legal
+    Purpose: To check if the movement from one location to another is legal according to players.
+        Verifies if the selections are empty, replacing own player, or moving others dice. 
+
+    Parameters:
+        old_position, a coordinate. It holds the old position information
+        new_position, a coordinate. It holds the new position coordinates. 
+        is_player_computer, a boolean. It holds if the player is human or a computer
+
+    Return Value: Returns true if the movement is legal.
+
+    Local Variables:
+        old_row, an integer. It holds old row number. 
+        old_col, an integer. It holds old column number. 
+        new_row, an integer. It holds the new row number. 
+        new_col, an integer. It holds the new column number. 
+
+    Algorithm:
+        1. Check if the selection made is empty.
+        2. Check if current player is trying to move other player's dice.
+        3. Check if current player is trying to remove its own player.
+
+    Assistance Received: none
+    """
     def is_legal(self, old_position, new_position, is_player_computer):
         """Checks if the move is legal"""
         old_row = old_position.row
@@ -174,11 +300,56 @@ class Board:
 
         return True
 
+    """
+    Function Name: algo_path_good
+    Purpose: To check the path for automated process of verification of path. 
+
+    Parameters:
+        old_position, a coordinate. It holds the old position information
+        new_position, a coordinate. It holds the new position coordinates. 
+        is_player_computer, a boolean. It holds if the player is human or a computer
+
+    Return Value: Returns true if the path from one location to another is true.
+
+    Local Variables: none.
+
+    Algorithm: none.
+
+    Assistance Received: none
+    """
     def algo_path_good(self, old_position, new_position, correct_paths):
         self.god_mode = True
 
         return self.is_path_good(old_position, new_position, correct_paths)
 
+    """
+    Function Name: is_path_good
+    Purpose: To check if the path is good. It checks if there are any distractions on the way.
+
+    Parameters:
+        old_position, a coordinate. It holds the old position information
+        new_position, a coordinate. It holds the new position coordinates. 
+        correctpaths, a boolean array. It holds the boolean values for if both frontal
+            and lateral moves can be made
+
+    Return Value: Returns true if the path is possible.
+
+    Local Variables:
+        frontal, an integer. It holds the total frontal movement that needs to be made.
+        side,  an integer. It holds the lateral movement needed.
+        old_row, an integer. It holds old row number. 
+        old_col, an integer. It holds old column number. 
+        new_row, an integer. It holds the new row number. 
+        new_col, an integer. It holds the new column number. 
+
+    Algorithm:
+        1. Make a frontal move first and then lateral. 
+        2. Store if the path is possible.
+        3. Make a lateral move first and then frontal.
+        3. Store if the path is possible.
+
+    Assistance Received: none
+    """
     def is_path_good(self, old_position, new_position, correctpaths):
         """Checks if the path is good"""
         old_row = old_position.row
@@ -293,6 +464,26 @@ class Board:
         # Returns true if either direction is true.
         return correctpaths[0] or correctpaths[1]
 
+    """
+    Function Name: compute_dice
+    Purpose: Computes the dice given only the top and the index. It is called during the
+        first process.
+
+    Parameters:
+        top, an integer. It holds the top face of the die. 
+        index, an integer. It holds the index number of the die. 
+        is_computer, a boolean. It tells if the die is computer's or human's
+
+    Return Value: Returns true if the path is possible.
+
+    Local Variables:
+        right, an integer. It holds the right face. 
+        front, an integer. It holds the front face of the die 
+
+    Algorithm: None
+
+    Assistance Received: none
+    """
     def compute_dice(self, top, index, is_computer):
         """Computes the dice and returns it"""
         right = 3
@@ -311,6 +502,29 @@ class Board:
 
         return Dice(dice_name)
 
+    """
+    Function Name: get_path_coordinates
+    Purpose: Computes all of the coordinates in the path from one die to another die. 
+        It returns all the paths as an array.
+
+    Parameters:
+        from_node, a Coordinates. It holds the values for where we are moving the die from. 
+        to, a Coordinates. It holds the values for where we are moving the die to. 
+
+    Return Value: Returns the array with all the paths.
+
+    Local Variables:
+        row1, an integer. It holds the from row number
+        row2, an integer. It holds the to row number
+        col1, an integer. It holds the from column number
+        col2, an integer. It holds the to column number 
+
+    Algorithm:
+        1. Go horizontally first then capture all the coordinates of the path if the move is legal in that direction
+        2. Go frontal first then capture all the coordinates of the path if the move is legal.
+
+    Assistance Received: none
+    """
     def get_path_coordinates(self, from_node, to):
         # Initialization of directions and the answer arraylist.
         directions = [True, True]

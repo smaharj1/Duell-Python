@@ -1,14 +1,47 @@
-""""""
+"""
+Name:  Sujil Maharjan                                    
+Project : Project 1, Duell game                          
+Class : Organization of Programming Language(CMPS 366-01)
+Date : 10-5-2016                                         
+"""
 from model.Player import Player
 from model.Coordinates import Coordinates
 from model.TreeNode import TreeNode
 
 
 class Computer(Player):
+    """
+    Function Name: Computer
+    Purpose: Default Constructor
 
+    Parameters: 
+        board, a Board object. It holds the board object.
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def __init__(self, board):
         super().__init__(board, True)
 
+    """
+    Function Name: play
+    Purpose: Plays the human's move
+
+    Parameters: None.
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: None.
+
+    Assistance Received: none
+    """
     def play(self):
         self.refresh_players()
 
@@ -60,6 +93,23 @@ class Computer(Player):
 
         return dice_ate
 
+    """
+    Function Name: refresh_players
+    Purpose: Refreshes the current states of the board and stores all the current and opponent player's dices
+
+    Parameters: None.
+
+    Return Value: none.
+
+    Local Variables: None. 
+
+    Algorithm: 
+        1. Loop through all the cells in the board 
+        2. If the cell has computer's die, store it to opponent
+        3. If the cell has human's die, store it to current
+
+    Assistance Received: none
+    """
     def refresh_players(self):
         self._opponent_player = []
         self._current_player = []
